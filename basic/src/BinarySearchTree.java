@@ -1,14 +1,10 @@
 package test;
 
+import java.util.Stack;
+
 public class BinarySearchTree {
 	public static void main(String[] args) {
 		BSTree bst = new BSTree();
-//		Node node1 = new Node(5);
-//		Node node2 = new Node(6);
-//		Node node3 = new Node(7);
-//		bst.setRoot(new Node(7));
-//		bst.insertRe(node3,node1);
-//		bst.insertRe(node3,node2);
 		bst.insert(3);
 		bst.insert(1);
 		bst.insert(5);
@@ -21,6 +17,7 @@ public class BinarySearchTree {
 		System.out.println();
 		bst.postTraversal(bst.root);
 		System.out.println();
+		bst.iterativePreorder(bst.root);
 		System.out.println(bst.getMaxNode(bst.root).value);
 		System.out.println(bst.getMinNode(bst.root).value);
 	}
@@ -46,6 +43,10 @@ class Node
 class BSTree
 {
 	public Node root;
+	private void visit(Node p)
+	{
+		System.out.println(p.value);
+	}
 	public Node find(int key)
 	{
 		Node current = root;
@@ -196,4 +197,43 @@ class BSTree
 		return root;
 	}
 	
+	public void iterativePreorder(Node root)
+	{
+		Node p = root;
+		Stack<Node> s = new Stack<Node>();
+		if(p != null)
+		{
+			s.push(p);
+			while(!s.empty())
+			{
+				p = s.pop();
+				visit(p);
+				if(p.rChild != null)
+					s.push(p.rChild);
+				if(p.lChild != null)
+					s.push(p.lChild);
+			}
+		}
+	}
+	public void iterativePosorder(Node root)
+	{
+		Node p = root;
+		Node q = root;
+		Stack<Node> s = new Stack<Node>();
+		while(p!=null)
+		{
+			for(;p.lChild!=null;p=p.lChild)
+				s.push(p);
+			while(p!=null&&(p.rChild==null||p.rChild ==q))
+			{
+				visit(p);
+				q = p;
+				if(s.isEmpty())
+					return;
+				p = s.pop();
+			}
+			s.push(p);
+			p = p.rChild;
+		}
+	}
 }
