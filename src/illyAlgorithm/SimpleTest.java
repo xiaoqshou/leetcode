@@ -27,7 +27,7 @@ public class SimpleTest {
 		this.node4 = calcNodeVal(node4);
 		this.node5 = calcNodeVal(node5);
 	}
-	public void judgeArea(TestCase iCase)
+	public void judgeArea(Individual iCase)
 	{
 		if((iCase.value>node5)||iCase.value<0)
 			System.out.println("invalid");
